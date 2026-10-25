@@ -33,3 +33,7 @@ spec:
       path: /data
       accessMode: ReadWriteOnce
       size: 128Mi
+
+    logs:
+      access:
+        enabled: true
