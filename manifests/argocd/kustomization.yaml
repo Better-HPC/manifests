@@ -8,3 +8,6 @@ helmCharts:
     releaseName: argocd
     repo: https://argoproj.github.io/argo-helm
     valuesFile: values.yaml
+
+resources:
+  - ingress.yaml

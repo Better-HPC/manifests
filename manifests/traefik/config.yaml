@@ -1,0 +1,35 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    env:
+      - name: PORKBUN_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: porkbun-credentials
+            key: PORKBUN_API_KEY
+      - name: PORKBUN_SECRET_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: porkbun-credentials
+            key: PORKBUN_SECRET_API_KEY
+      - name: ACME_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: porkbun-credentials
+            key: ACME_EMAIL
+
+    additionalArguments:
+      - "--certificatesresolvers.porkbun.acme.email=$(ACME_EMAIL)"
+      - "--certificatesresolvers.porkbun.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.porkbun.acme.dnschallenge.provider=porkbun"
+
+    persistence:
+      enabled: true
+      name: data
+      path: /data
+      accessMode: ReadWriteOnce
+      size: 128Mi

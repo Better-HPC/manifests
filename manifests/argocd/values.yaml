@@ -1,0 +1,8 @@
+configs:
+  cm:
+    url: "https://argo.bhpc.dev"
+    kustomize.buildOptions: "--enable-helm"
+
+  params:
+    # Rely on upstream proxy for TLS
+    server.insecure: true

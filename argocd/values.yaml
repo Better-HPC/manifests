@@ -1,4 +1,0 @@
-configs:
-  cm:
-    kustomize.buildOptions: "--enable-helm"
-    url: "https://argo.bhpc.dev"
