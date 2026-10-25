@@ -3,6 +3,7 @@ kind: HelmChartConfig
 metadata:
   name: traefik
   namespace: kube-system
+
 spec:
   valuesContent: |-
     env:
@@ -33,7 +34,3 @@ spec:
       path: /data
       accessMode: ReadWriteOnce
       size: 128Mi
-
-    logs:
-      access:
-        enabled: true
