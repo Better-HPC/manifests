@@ -1,0 +1,29 @@
+command:
+  - /opt/keycloak/bin/kc.sh
+  - start
+  - --http-enabled=true
+  - --hostname-strict=false
+  - --proxy-headers=xforwarded
+
+database:
+  vendor: postgres
+  hostname: postgres.keycloak.svc.cluster.local
+  port: 5432
+  database: keycloak
+  username: keycloak
+  existingSecret: keycloak-credentials
+  existingSecretKey: DB_PASSWORD
+
+extraEnv: |
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: ADMIN_USERNAME
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: ADMIN_PASSWORD
+  - name: KC_HOSTNAME
+    value: https://keycloak.example.com

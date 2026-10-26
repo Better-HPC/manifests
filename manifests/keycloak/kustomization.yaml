@@ -8,34 +8,14 @@ helmCharts:
     version: 7.2.3
     releaseName: keycloak
     namespace: keycloak
-    valuesInline:
-      command:
-        - /opt/keycloak/bin/kc.sh
-        - start
-        - --http-enabled=true
-        - --hostname-strict=false
-        - --proxy-headers=xforwarded
+    valuesFile: keycloak/values.yaml
 
-      database:
-        vendor: postgres
-        hostname: postgres.keycloak.svc.cluster.local
-        port: 5432
-        database: keycloak
-        username: keycloak
-        existingSecret: keycloak-credentials
-        existingSecretKey: DB_PASSWORD
-
-      extraEnv: |
-        - name: KC_BOOTSTRAP_ADMIN_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-credentials
-              key: ADMIN_USERNAME
-        - name: KC_BOOTSTRAP_ADMIN_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-credentials
-              key: ADMIN_PASSWORD
+  - name: postgres
+    repo: https://groundhog2k.github.io/helm-charts/
+    version: <chart version>
+    releaseName: postgres
+    namespace: keycloak
+    valuesFile: postgres/values.yaml
 
 resources:
   - ingress.yaml
