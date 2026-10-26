@@ -30,10 +30,10 @@ kubectl kustomize --enable-helm manifests/sealed-secrets/ \
 ### 2. Traefik — Routing and TLS
 
 The Traefik manifests configure the cluster ingress controller to request TLS certificates using the ACME protocol.
-This requires knowing the authentication keys required by your upstream DNS service.
+These manifests require knowing the authentication keys provided by the upstream DNS service.
 
-Generate a Sealed Secret for the DNS provider's ACME protocol.
-Replace the placeholder values with the appropriate credentials and contact email.
+Generate a Sealed Secret for the DNS provider's ACME credentials.
+The example below uses PorkBun, although any Traefik supported ACME provider will work.
 
 ```shell
 kubectl create secret generic porkbun-credentials \
@@ -62,7 +62,7 @@ kubectl -n kube-system rollout status deployment/traefik
 ### Keycloak - Authentication
 
 Keycloak requires two sets of credentials during provisioning: one for the default administrator
-account and one for the database connection. The administrator credentials are needed for the
+account and one for its backend database connection. The administrator credentials are needed for the
 first login and should be recorded for later use. The database credentials do not need to be known by
 the operator, and can be set to a random secure value.
 
@@ -87,7 +87,12 @@ kubectl kustomize --enable-helm manifests/keycloak/ | kubectl apply --server-sid
 
 ### 3. Argo CD — GitOps
 
-Create the Argo CD namespace and deploy its manifests:
+Configuring ArgoCD to recognize user accounts in Keycloak requires manual changes in the Keycloak UI.
+Full instructions are provided in the 
+[ArgoCD Documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/#keycloak-and-argo-cd-with-pkce).
+
+After updating the OIDC configuration in [manifests/argocd/values.yaml](manifests/argocd/values.yaml) to reflect 
+values chosen during the Keycloak setup, create the Argo CD namespace and deploy the ArgoCD manifests:
 
 ```shell
 kubectl create namespace argocd

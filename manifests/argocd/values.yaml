@@ -2,6 +2,17 @@ configs:
   cm:
     url: "https://argo.bhpc.dev"
     kustomize.buildOptions: "--enable-helm"
+    oidc.config: |
+      name: Keycloak
+      issuer: https://keycloak.bhpc.dev/realms/bhpc
+      clientID: argocd
+      enablePKCEAuthentication: true
+      refreshTokenThreshold: 2m
+      requestedScopes: ["openid", "profile", "email", "groups", "offline_access"]
+
+  rbac:
+    policy.csv: |
+      g, ArgoCDAdmins, role:admin
 
   params:
     # Rely on upstream proxy for TLS
