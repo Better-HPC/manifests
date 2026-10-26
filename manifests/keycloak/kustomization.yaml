@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: keycloak
+
+resources:
+  - namespace.yaml
+  - keycloak-credentials-sealed.yaml
+
+helmCharts:
+  - name: keycloakx
+    repo: https://codecentric.github.io/helm-charts
+    version: 7.2.3
+    releaseName: keycloak
+    namespace: keycloak
+    valuesInline:
+      command:
+        - /opt/keycloak/bin/kc.sh
+        - start
+        - --http-enabled=true
+        - --hostname-strict=false
+        - --proxy-headers=xforwarded
+
+      database:
+        vendor: postgres
+        hostname: postgres.keycloak.svc.cluster.local
+        port: 5432
+        database: keycloak
+        username: keycloak
+        existingSecret: keycloak-credentials
+        existingSecretKey: DB_PASSWORD
+
+      extraEnv: |
+        - name: KC_BOOTSTRAP_ADMIN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-credentials
+              key: ADMIN_USERNAME
+        - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-credentials
+              key: ADMIN_PASSWORD

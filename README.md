@@ -56,6 +56,22 @@ kubectl -n kube-system rollout status deployment/traefik
 
 ```
 
+### Keycloak - Authentication
+
+```shell
+kubectl create secret generic keycloak-credentials \
+  --namespace keycloak \
+  --from-literal=ADMIN_USERNAME='admin' \
+  --from-literal=ADMIN_PASSWORD='K6mR7tjo7!UPgA' \
+  --from-literal=DB_PASSWORD='Ml#yti@3X5JUSY' \
+  --dry-run=client -o yaml \
+| kubeseal --format yaml > manifests/keycloak/secrets.yaml
+```
+
+```shell
+kubectl kustomize --enable-helm . | kubectl apply --server-side -f -
+```
+
 ### 3. Argo CD — GitOps
 
 Create the Argo CD namespace and deploy its manifests:
