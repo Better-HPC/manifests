@@ -69,7 +69,8 @@ kubectl create secret generic keycloak-credentials \
 ```
 
 ```shell
-kubectl kustomize --enable-helm . | kubectl apply --server-side -f -
+kubectl create namespace keycloak
+kubectl kustomize --enable-helm manifests/keycloak/ | kubectl apply --server-side -f -
 ```
 
 ### 3. Argo CD — GitOps
