@@ -62,8 +62,10 @@ kubectl -n kube-system rollout status deployment/traefik
 kubectl create secret generic keycloak-credentials \
   --namespace keycloak \
   --from-literal=ADMIN_USERNAME='admin' \
-  --from-literal=ADMIN_PASSWORD='K6mR7tjo7!UPgA' \
-  --from-literal=DB_PASSWORD='Ml#yti@3X5JUSY' \
+  --from-literal=ADMIN_PASSWORD='admin' \
+  --from-literal=DB_NAME='keycloak' \
+  --from-literal=DB_USER='keycloak' \
+  --from-literal=DB_PASSWORD='<CHANGE ME>' \
   --dry-run=client -o yaml \
 | kubeseal --format yaml > manifests/keycloak/secrets.yaml
 ```
