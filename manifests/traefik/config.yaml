@@ -34,3 +34,13 @@ spec:
       path: /data
       accessMode: ReadWriteOnce
       size: 128Mi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
+data:
+  # Resolve the public hostname to Traefik from inside the cluster to avoid hairpin NAT.
+  bhpc.override: |
+    rewrite name keycloak.bhpc.dev traefik.kube-system.svc.cluster.local
