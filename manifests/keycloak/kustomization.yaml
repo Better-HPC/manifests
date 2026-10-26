@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: keycloak
 
 resources:
-  - keycloak-credentials-sealed.yaml
+  - secrets.yaml
 
 helmCharts:
   - name: keycloakx
