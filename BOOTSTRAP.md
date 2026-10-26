@@ -100,7 +100,9 @@ kubectl kustomize manifests/argocd/ --enable-helm \
   | kubectl apply --server-side -f -
 ```
 
-Retrieve the initial administrator password:
+Assuming all services have been correctly configured, you should now be able to authenticate with Argo
+using credentials configured in Keycloak. However, ArgoCD also provides an initial `admin` user account
+with a password that can be retrieved using the following command:
 
 ```shell
 kubectl -n argocd get secret argocd-initial-admin-secret \
