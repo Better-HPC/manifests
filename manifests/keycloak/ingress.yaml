@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: keycloak.example.com
+    - host: keycloak.bhpc.dev
       http:
         paths:
           - path: /
