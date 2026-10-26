@@ -5,6 +5,9 @@ command:
   - --hostname-strict=false
   - --proxy-headers=xforwarded
 
+http:
+  relativePath: "/"
+
 database:
   vendor: postgres
   hostname: postgres.keycloak.svc.cluster.local
