@@ -10,13 +10,8 @@ helmCharts:
     namespace: keycloak
     valuesFile: keycloak/values.yaml
 
-  - name: postgres
-    repo: https://groundhog2k.github.io/helm-charts/
-    version: <chart version>
-    releaseName: postgres
-    namespace: keycloak
-    valuesFile: postgres/values.yaml
-
 resources:
+  - postgres/service.yaml
+  - postgres/statefulset.yaml
   - ingress.yaml
   - secrets.yaml
