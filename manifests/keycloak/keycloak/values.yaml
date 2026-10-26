@@ -26,4 +26,4 @@ extraEnv: |
         name: keycloak-credentials
         key: ADMIN_PASSWORD
   - name: KC_HOSTNAME
-    value: https://keycloak.example.com
+    value: https://keycloak.bhpc.dev
