@@ -20,7 +20,7 @@ spec:
         fsGroup: 999
       containers:
         - name: postgres
-          image: postgres:17
+          image: postgres:17.11
           ports:
             - name: postgres
               containerPort: 5432
