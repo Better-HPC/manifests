@@ -7,7 +7,8 @@ helmCharts:
     version: 9.4.17
     releaseName: argocd
     repo: https://argoproj.github.io/argo-helm
-    valuesFile: values.yaml
+    valuesFile: argocd/values.yaml
 
 resources:
-  - ingress.yaml
+  - argocd/ingress.yaml
+  - argocd/applications.yaml

@@ -13,5 +13,5 @@ helmCharts:
 resources:
   - postgres/service.yaml
   - postgres/statefulset.yaml
-  - ingress.yaml
+  - keycloak/ingress.yaml
   - secrets.yaml
