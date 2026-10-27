@@ -88,10 +88,10 @@ kubectl kustomize --enable-helm manifests/keycloak/ | kubectl apply --server-sid
 ### 3. Argo CD — GitOps
 
 Configuring ArgoCD to recognize user accounts in Keycloak requires manual changes in the Keycloak UI.
-Full instructions are provided in the 
+Full instructions are provided in the
 [ArgoCD Documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/#keycloak-and-argo-cd-with-pkce).
 
-After updating the OIDC configuration in [manifests/argocd/values.yaml](manifests/argocd/values.yaml) to reflect 
+After updating the OIDC configuration in [manifests/argocd/values.yaml](manifests/argocd/values.yaml) to reflect
 values chosen during the Keycloak setup, create the Argo CD namespace and deploy the ArgoCD manifests:
 
 ```shell
@@ -107,4 +107,20 @@ with a password that can be retrieved using the following command:
 ```shell
 kubectl -n argocd get secret argocd-initial-admin-secret \
   -o jsonpath='{.data.password}' | base64 -d
+```
+
+
+```bash
+kubectl create secret generic github-app-credentials \
+  --namespace argocd \
+  --from-literal=type='git' \
+  --from-literal=url='https://github.com/Better-HPC' \
+  --from-literal=githubAppID='4416281' \
+  --from-literal=githubAppInstallationID='149617352' \
+  --from-file=githubAppPrivateKey=./bhpc-gitops.2026-10-27.private-key.pem \
+  --dry-run=client -o yaml \
+| kubectl label --local -f - \
+  argocd.argoproj.io/secret-type=repo-creds \
+  -o yaml \
+| kubeseal --format yaml > secrets.yaml
 ```

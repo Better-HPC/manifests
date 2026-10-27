@@ -12,3 +12,4 @@ helmCharts:
 resources:
   - argocd/ingress.yaml
   - argocd/applications.yaml
+  - argocd/secrets.yaml
