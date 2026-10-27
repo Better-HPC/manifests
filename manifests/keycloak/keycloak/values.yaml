@@ -12,8 +12,6 @@ database:
   vendor: postgres
   hostname: postgres.keycloak.svc.cluster.local
   port: 5432
-  database: keycloak
-  username: keycloak
   existingSecret: keycloak-credentials
   existingSecretKey: DB_PASSWORD
 
@@ -30,3 +28,13 @@ extraEnv: |
         key: ADMIN_PASSWORD
   - name: KC_HOSTNAME
     value: https://keycloak.bhpc.dev
+  - name: KC_DB_URL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: DB_NAME
+  - name: KC_DB_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-credentials
+        key: DB_USER
