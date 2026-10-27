@@ -4,5 +4,5 @@ metadata:
   name: argocd-rbac-cm
 data:
   policy.csv: |
-    g, "ArgoCD Admins", role:admin
-    g, "ArgoCD Readers", role:readonly
+    g, ArgoCDAdmins, role:admin
+    g, ArgoCDReaders, role:readonly
