@@ -8,3 +8,6 @@ helmCharts:
     repo: https://aquasecurity.github.io/helm-charts/
     valuesFile: trivy/values.yaml
     includeCRDs: true
+
+resources:
+  - trivy/ingress.yaml
