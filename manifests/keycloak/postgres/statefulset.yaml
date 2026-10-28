@@ -69,7 +69,9 @@ spec:
             limits:
               memory: 512Mi
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
         name: data
       spec:
         accessModes:
