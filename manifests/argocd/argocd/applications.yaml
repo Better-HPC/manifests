@@ -21,9 +21,11 @@ spec:
         repoURL: https://github.com/Better-HPC/manifests.git
         targetRevision: main
         path: "{{ .path.path }}"
+        kustomize:
+          namespace: "{{ .path.basename }}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ .path.basename }}"
+        namespace: "{{ .path.basenameNormalized }}"
       syncPolicy:
         automated:
           prune: true
