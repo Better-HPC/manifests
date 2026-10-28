@@ -10,3 +10,7 @@ helmCharts:
     includeCRDs: true
     valuesInline:
       fullnameOverride: sealed-secrets-controller
+
+resources:
+  - traefik/config.yaml
+  - traefik/secrets.yaml
