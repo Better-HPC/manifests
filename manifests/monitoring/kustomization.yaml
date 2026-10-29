@@ -2,9 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 helmCharts:
-  - name: monitoring-operator
+  - name: trivy-operator
     version: 0.33.2
     releaseName: monitoring-operator
     repo: https://aquasecurity.github.io/helm-charts/
-    valuesFile: monitoring/values.yaml
+    valuesFile: trivy/values.yaml
     includeCRDs: true
