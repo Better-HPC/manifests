@@ -4,13 +4,9 @@ metadata:
   name: coredns-custom
   namespace: kube-system
 data:
-  # Resolve every public bhpc.dev hostname to Traefik from inside the cluster.
-  # This avoids hairpin NAT problems.
+  # Resolve the public keycloak hostname to an internal address to avoid hairpin NAT problems.
   bhpc.override: |
-    rewrite stop {
-      name regex (.*)\.bhpc\.dev traefik.kube-system.svc.cluster.local
-      answer auto
-    }
+    rewrite stop name exact keycloak.bhpc.dev traefik.kube-system.svc.cluster.local
 ---
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
