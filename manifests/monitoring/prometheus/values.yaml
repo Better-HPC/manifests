@@ -48,6 +48,8 @@ grafana:
     accessModes:
       - ReadWriteOnce
     size: 5Gi
+  initChownData:
+    enabled: false
   grafana.ini:
     server:
       domain: grafana.bhpc.dev
