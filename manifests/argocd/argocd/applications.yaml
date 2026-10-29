@@ -6,10 +6,10 @@ metadata:
 spec:
   description: Applications deployed from the Better-HPC/manifests repository
   sourceRepos:
-    - server: https://kubernetes.default.svc
-      namespace: "*"
+    - https://github.com/Better-HPC/manifests.git
   destinations:
     - server: https://kubernetes.default.svc
+      namespace: "*"
   clusterResourceWhitelist:
     - group: ""
       kind: Namespace
@@ -32,7 +32,6 @@ metadata:
   name: better-hpc-manifests
   namespace: argocd
 spec:
-  project: better-hpc
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
@@ -45,7 +44,7 @@ spec:
     metadata:
       name: "{{ .path.basename }}"
     spec:
-      project: default
+      project: better-hpc
       source:
         repoURL: https://github.com/Better-HPC/manifests.git
         targetRevision: main
