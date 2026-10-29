@@ -1,9 +1,38 @@
 apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: better-hpc
+  namespace: argocd
+spec:
+  description: Applications deployed from the Better-HPC/manifests repository
+  sourceRepos:
+    - server: https://kubernetes.default.svc
+      namespace: "*"
+  destinations:
+    - server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+    - group: aquasecurity.github.io
+      kind: ClusterComplianceReport
+---
+apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: better-hpc-manifests
   namespace: argocd
 spec:
+  project: better-hpc
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:

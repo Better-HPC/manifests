@@ -16,5 +16,4 @@ configs:
       g, ArgoCDReaders, role:readonly
 
   params:
-    # Rely on upstream proxy for TLS
-    server.insecure: true
+    server.insecure: true # Rely on upstream proxy for TLS
