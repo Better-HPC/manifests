@@ -1,13 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: keycloak
 
 helmCharts:
   - name: keycloakx
     repo: https://codecentric.github.io/helm-charts
     version: 7.2.3
     releaseName: keycloak
-    namespace: keycloak
     valuesFile: keycloak/values.yaml
 
 resources:

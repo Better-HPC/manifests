@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: better-hpc
-  namespace: argocd
 spec:
   description: Applications deployed from the Better-HPC/manifests repository
   sourceRepos:
@@ -30,7 +29,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: better-hpc-manifests
-  namespace: argocd
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
