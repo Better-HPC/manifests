@@ -29,9 +29,7 @@ compliance:
     - k8s-pss-restricted-0.1
 
 serviceMonitor:
-  enabled: false
-  labels:
-    release: kube-prometheus-stack
+  enabled: true
 
 resources:
   requests:
