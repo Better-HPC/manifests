@@ -4,6 +4,7 @@ config:
   existingSecret: oauth2-proxy-credentials
   configFile: |-
     provider = "keycloak-oidc"
+    insecure_oidc_allow_unverified_email = true
     oidc_issuer_url = "https://keycloak.bhpc.dev/realms/bhpc"
     redirect_url = "https://prometheus.bhpc.dev/oauth2/callback"
     scope = "openid profile email groups"
