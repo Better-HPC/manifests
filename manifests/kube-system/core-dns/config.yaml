@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-rewrite
+  namespace: kube-system
+data:
+  # Resolve the public keycloak hostname to an internal address to avoid hairpin NAT problems.
+  bhpc.override: |
+    rewrite stop name exact keycloak.bhpc.dev traefik.kube-system.svc.cluster.local
