@@ -16,5 +16,13 @@ helmCharts:
     valuesFile: prometheus/values.yaml
     includeCRDs: true
 
+  # Authenticating reverse proxy in front of Prometheus, which has no login of its own
+  - name: oauth2-proxy
+    version: 10.0.0
+    releaseName: oauth2-proxy
+    repo: https://oauth2-proxy.github.io/manifests
+    valuesFile: oauth2-proxy/values.yaml
+
 resources:
   - prometheus/ingress.yaml
+  - prometheus/secrets.yaml

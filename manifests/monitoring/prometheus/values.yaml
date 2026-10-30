@@ -50,10 +50,29 @@ grafana:
     size: 5Gi
   initChownData:
     enabled: false
+  # Provides GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET to the container environment
+  envFromSecret: grafana-oidc
   grafana.ini:
     server:
       domain: grafana.bhpc.dev
       root_url: https://grafana.bhpc.dev
+    auth.generic_oauth:
+      enabled: true
+      name: Keycloak
+      client_id: grafana
+      scopes: openid profile email groups offline_access
+      auth_url: https://keycloak.bhpc.dev/realms/bhpc/protocol/openid-connect/auth
+      token_url: https://keycloak.bhpc.dev/realms/bhpc/protocol/openid-connect/token
+      api_url: https://keycloak.bhpc.dev/realms/bhpc/protocol/openid-connect/userinfo
+      signout_redirect_url: https://keycloak.bhpc.dev/realms/bhpc/protocol/openid-connect/logout?client_id=grafana&post_logout_redirect_uri=https%3A%2F%2Fgrafana.bhpc.dev%2Flogin
+      use_pkce: true
+      use_refresh_token: true
+      allow_sign_up: true
+      login_attribute_path: preferred_username
+      groups_attribute_path: groups
+      role_attribute_path: "contains(groups[*], 'GrafanaAdmins') && 'GrafanaAdmin' || contains(groups[*], 'GrafanaReaders') && 'Viewer'"
+      role_attribute_strict: true
+      allow_assign_grafana_admin: true
   resources:
     requests:
       cpu: 100m
