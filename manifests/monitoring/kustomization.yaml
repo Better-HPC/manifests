@@ -24,5 +24,6 @@ helmCharts:
     valuesFile: oauth2-proxy/values.yaml
 
 resources:
+  - namespace.yaml
   - prometheus/ingress.yaml
   - prometheus/secrets.yaml
