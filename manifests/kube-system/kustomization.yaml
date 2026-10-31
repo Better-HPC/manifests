@@ -1,11 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: kube-system
+
 helmCharts:
   - name: sealed-secrets
     repo: https://bitnami.github.io/sealed-secrets
     version: 2.18.6
     releaseName: sealed-secrets
+    namespace: kube-system
     includeCRDs: true
     valuesInline:
       fullnameOverride: sealed-secrets-controller
@@ -17,4 +20,3 @@ resources:
   - network-policies/ingress-exceptions.yaml
   - traefik/config.yaml
   - traefik/secrets.yaml
-
