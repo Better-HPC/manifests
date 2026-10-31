@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: coredns-rewrite
+  name: coredns-custom
 data:
   # Resolve the public keycloak hostname to an internal address to avoid hairpin NAT problems.
   bhpc.override: |

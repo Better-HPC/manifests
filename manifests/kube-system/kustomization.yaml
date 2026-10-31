@@ -12,7 +12,9 @@ helmCharts:
 
 resources:
   - namespace.yaml
+  - core-dns/config.yaml
   - network-policies/intra-namespace.yaml
   - network-policies/ingress-exceptions.yaml
   - traefik/config.yaml
   - traefik/secrets.yaml
+
