@@ -1,0 +1,93 @@
+# The `intra-namespace` policy denies all ingress to kube-system pods that does
+# not originate from kube-system. Network policies are additive, so each policy
+# below re-opens only the ports a specific workload must expose to the rest of
+# the cluster (or to the outside world).
+
+# CoreDNS: name resolution for every namespace, plus metrics scraping
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-coredns
+  namespace: kube-system
+spec:
+  podSelector:
+    matchLabels:
+      k8s-app: kube-dns
+  ingress:
+    - ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - protocol: TCP
+          port: 9153
+---
+# Traefik: external clients and in-cluster callers (e.g. Argo CD and Grafana
+# reaching Keycloak through the CoreDNS rewrite) both enter via the pod ports
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-traefik
+  namespace: kube-system
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: traefik
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 8000
+        - protocol: TCP
+          port: 8443
+---
+# k3s ServiceLB pods: host ports 80/443 forward public traffic to Traefik
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-servicelb
+  namespace: kube-system
+spec:
+  podSelector:
+    matchLabels:
+      svccontroller.k3s.cattle.io/svcname: traefik
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 80
+        - protocol: TCP
+          port: 443
+---
+# Sealed Secrets: `kubeseal` reaches the controller through the API server
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-sealed-secrets
+  namespace: kube-system
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: sealed-secrets
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 8080
+---
+# Metrics Server: the API server proxies metrics API requests to it
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-metrics-server
+  namespace: kube-system
+spec:
+  podSelector:
+    matchLabels:
+      k8s-app: metrics-server
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 10250

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-system
+  annotations:
+    # Pre-existing k3s namespace; never let Argo CD prune or delete it
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false

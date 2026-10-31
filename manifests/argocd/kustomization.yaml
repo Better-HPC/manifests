@@ -9,6 +9,7 @@ helmCharts:
     valuesFile: argocd/values.yaml
 
 resources:
+  - namespace.yaml
   - argocd/ingress.yaml
   - argocd/applications.yaml
   - argocd/secrets.yaml

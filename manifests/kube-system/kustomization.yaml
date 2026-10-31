@@ -11,5 +11,8 @@ helmCharts:
       fullnameOverride: sealed-secrets-controller
 
 resources:
+  - namespace.yaml
+  - network-policies/intra-namespace.yaml
+  - network-policies/ingress-exceptions.yaml
   - traefik/config.yaml
   - traefik/secrets.yaml

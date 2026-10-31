@@ -9,7 +9,8 @@ helmCharts:
     valuesFile: keycloak/values.yaml
 
 resources:
+  - namespace.yaml
+  - secrets.yaml
+  - keycloak/ingress.yaml
   - postgres/service.yaml
   - postgres/statefulset.yaml
-  - keycloak/ingress.yaml
-  - secrets.yaml
