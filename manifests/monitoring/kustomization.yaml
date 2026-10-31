@@ -1,10 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: monitoring
+
 helmCharts:
   - name: trivy-operator
     version: 0.33.2
     releaseName: monitoring-operator
+    namespace: monitoring
     repo: https://aquasecurity.github.io/helm-charts/
     valuesFile: trivy/values.yaml
     includeCRDs: true
@@ -12,6 +15,7 @@ helmCharts:
   - name: kube-prometheus-stack
     version: 75.15.1
     releaseName: kube-prometheus-stack
+    namespace: monitoring
     repo: https://prometheus-community.github.io/helm-charts
     valuesFile: prometheus/values.yaml
     includeCRDs: true
@@ -20,6 +24,7 @@ helmCharts:
   - name: oauth2-proxy
     version: 10.0.0
     releaseName: oauth2-proxy
+    namespace: monitoring
     repo: https://oauth2-proxy.github.io/manifests
     valuesFile: oauth2-proxy/values.yaml
 
